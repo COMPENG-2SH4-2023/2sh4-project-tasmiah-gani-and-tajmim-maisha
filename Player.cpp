@@ -81,17 +81,21 @@ void Player::movePlayer()
     
 
     playerPos.setObjPos(playerPos.x, playerPos.y, '*');
+
     switch(myDir) {
 
         case STOP:
             break;
 
         case UP:
+
             playerPos.setObjPos(playerPos.x, playerPos.y-1, '*');
             // playerPos.y--;               //move up array
             // moveCount++;
             if (playerPos.y < 1) {       // when playerPos is out of bound at the top of the board,
-                playerPos.y = 8;         // character is moved to the bottom on the board (wraparound)
+                // playerPos.y = 14;         // character is moved to the bottom on the board (wraparound)
+                playerPos.setObjPos(playerPos.x, 13, '*');
+
             }
             break;
 
@@ -99,8 +103,9 @@ void Player::movePlayer()
             playerPos.setObjPos(playerPos.x, playerPos.y+1, '*');
             // playerPos.y++;               //move down array
             // moveCount++;
-            if (playerPos.y > 8) {
-                playerPos.y = 1;
+            if (playerPos.y > 13) {
+                // playerPos.y = 1;
+                playerPos.setObjPos(playerPos.x, 1, '*');
             }
             break;
 
@@ -109,7 +114,8 @@ void Player::movePlayer()
             // playerPos.x--;               //move left of array
             // moveCount++;
             if (playerPos.x < 1) {
-                playerPos.x = 18;
+                // playerPos.x = 29;
+                playerPos.setObjPos(28, playerPos.y, '*');
             }
             break;
 
@@ -117,8 +123,9 @@ void Player::movePlayer()
             playerPos.setObjPos(playerPos.x+1, playerPos.y, '*');
             // playerPos.x++;               //move right of array
             // moveCount++;
-            if (playerPos.x > 18) {
-                playerPos.x = 1;
+            if (playerPos.x > 28) {
+                // playerPos.x = 1;
+                playerPos.setObjPos(1, playerPos.y, '*');
             }
             break;
         

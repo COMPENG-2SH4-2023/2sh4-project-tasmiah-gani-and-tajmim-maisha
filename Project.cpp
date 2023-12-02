@@ -15,6 +15,7 @@ GameMechs* myGM;
 objPos myPos;
 Player* myPlayer;
 
+
 bool exitFlag;
 
 void Initialize(void);
@@ -24,7 +25,7 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-char game_board[15][30];
+char gameBoard[15][30];
 
 int main(void)
 {
@@ -49,12 +50,12 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myPlayer = new Player(myGM);
-
-
     // Create a gameMechanics object on the heap and initialize its fields    
     myGM = new GameMechs(30, 15); //makes board size 30x15
     
+    myPlayer = new Player(myGM);
+
+
 }
 
 void GetInput(void)
@@ -97,13 +98,43 @@ void DrawScreen(void)
 
     MacUILib_clearScreen();
 
-    objPos tempPos;
-    myPlayer->getPlayerPos(tempPos);
+    // objPos tempPos;
+    myPlayer->getPlayerPos(myPos);
+
+    // MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n", 
+    //                 myGM->getBoardSizeX(),
+    //                 myGM->getBoardSizeY(),
+    //                 tempPos.x, tempPos.y, tempPos.symbol);
 
     MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n", 
                     myGM->getBoardSizeX(),
                     myGM->getBoardSizeY(),
-                    tempPos.x, tempPos.y, tempPos.symbol);
+                    myPos.x, myPos.y, myPos.symbol);
+
+
+    //Print board and moving character on screen
+    for(int row = 0; row < myGM->getBoardSizeY(); row++) {
+        for(int col = 0; col < myGM->getBoardSizeX(); col++) {
+
+            //print game board
+            if(0 == row || (myGM->getBoardSizeY()-1) == row || 0 == col || (myGM->getBoardSizeX()-1) == col) {
+                gameBoard[row][col] = '#';
+            }
+
+            //print moving character
+            else if(myPos.y == row && myPos.x == col) {
+                gameBoard[row][col] = myPos.symbol;
+            }
+
+            //print empty space on board
+            else {
+                gameBoard[row][col] = ' ';
+            }
+            MacUILib_printf("%c", gameBoard[row][col]);
+        }
+        MacUILib_printf("\n");
+    }
+
 
 
 }

@@ -33,11 +33,14 @@ void Player::updatePlayerDir()
 
     char input = mainGameMechsRef->getInput();
 
+
     switch(input)
     {                      
-        // case ' ':  // exit
-        //     exitFlag = 1;
-        //     break;
+       
+        case ' ':  // exit
+             mainGameMechsRef->setExitTrue(); //set exit flag to true when space inputted 
+            break;
+
         
         //Movement inputs
         case 'w':

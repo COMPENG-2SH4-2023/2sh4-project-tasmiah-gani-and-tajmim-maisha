@@ -1,8 +1,6 @@
 #include <iostream>
 #include "MacUILib.h"
-#include "objPos.h" //fundamental building block for project 
-#include "GameMechs.h"
-
+#include "objPos.h"
 
 
 using namespace std;
@@ -21,7 +19,9 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-
+objPos myPos;
+Player* myPlayer;
+char game_board[15][30];
 
 int main(void)
 {
@@ -46,9 +46,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    // Create a gameMechanics object on the heap and initialize its fields
-    myGM = new GameMechs(26, 13); //makes board size 26x13
-
+    exitFlag = false;
 }
 
 void GetInput(void)
@@ -80,16 +78,14 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    //clear input field in GM 
-    myGM->clearInput();
+    
 }
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
 
+    MacUILib_clearScreen();
 
-    MacUILib_printf("BoardSize: %dx%d", myGM->getBoardSizeX(), myGM->getBoardSizeY());
 }
 
 void LoopDelay(void)

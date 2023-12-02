@@ -1,4 +1,5 @@
 #include "GameMechs.h"
+#include "MacUILib.h"
 
 GameMechs::GameMechs()
 {
@@ -86,7 +87,7 @@ void GameMechs::incrementScore(int amount)
 */
 void GameMechs::clearInput()
 {
-    input = '\0'
+    input = '\0';
 }
 
 

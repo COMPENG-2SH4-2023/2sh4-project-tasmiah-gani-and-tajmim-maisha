@@ -49,6 +49,11 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     myPlayer = new Player(myGM);
+
+
+    // Create a gameMechanics object on the heap and initialize its fields    
+    myGM = new GameMechs(30, 15); //makes board size 30x15
+    
 }
 
 void GetInput(void)
@@ -81,6 +86,9 @@ void GetInput(void)
 void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
+
+    //clear input field in GM 
+    myGM->clearInput();
 }
 
 void DrawScreen(void)

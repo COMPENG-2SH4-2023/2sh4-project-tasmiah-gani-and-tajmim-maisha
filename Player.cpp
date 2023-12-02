@@ -31,7 +31,7 @@ void Player::updatePlayerDir()
     //     2. coordinate eith teammeneber (GmaeMech class)
     //     3. there will be a method in GameM
 
-    char input = mainGameMechsRef->GetInput();
+    char input = mainGameMechsRef->getInput();
 
     switch(input)
     {                      

@@ -9,8 +9,11 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
-// Global pointer to a gameMechanics class
+// Global pointer to specific classes
 GameMechs* myGM;
+
+objPos myPos;
+Player* myPlayer;
 
 bool exitFlag;
 
@@ -21,8 +24,6 @@ void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
 
-objPos myPos;
-Player* myPlayer;
 char game_board[15][30];
 
 int main(void)
@@ -60,10 +61,10 @@ void GetInput(void)
 {
 
     //access correct info using getter method
-    char input = myGM->getInput();
+    char input = myGM-> getInput();
     
     //collects input char 
-    myGM->setInput(input);
+    myGM-> setInput(input);
 
 
     // Debug: Press 'i' to increment the score
@@ -97,7 +98,7 @@ void DrawScreen(void)
     MacUILib_clearScreen();
 
     objPos tempPos;
-    myPlayer.getPlayerPos(tempPos);
+    myPlayer->getPlayerPos(tempPos);
 
     MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n", 
                     myGM->getBoardSizeX(),

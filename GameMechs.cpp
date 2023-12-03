@@ -13,7 +13,7 @@ GameMechs::GameMechs()
 
     foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of board to not be displayed
 
-    // generateFood(objPos(-1, -1, ' ')); // Generate initial food, leaving room for random gen 
+    generateFood(objPos(-1, -1, ' ')); // Generate initial food, leaving room for random gen 
 
 }
 

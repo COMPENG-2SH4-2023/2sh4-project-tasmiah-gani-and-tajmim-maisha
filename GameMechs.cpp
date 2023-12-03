@@ -13,7 +13,7 @@ GameMechs::GameMechs()
 
     foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of board to not be displayed
 
-    generateFood(objPos(-1, -1, ' ')); // Generate initial food, leaving room for random gen
+    // generateFood(objPos(-1, -1, ' ')); // Generate initial food, leaving room for random gen 
 
 }
 
@@ -93,22 +93,26 @@ void GameMechs::incrementScore(int amount)
     score += amount;
 }
 */
+
 void GameMechs::clearInput()
 {
     input = '\0';
 }
 
+
+
 void GameMechs::generateFood(objPos blockOff)
 {
+
     int randX = 0;
     int randY = 0;
     srand(time(NULL)); //seed the time 
 
     bool flag = true; 
-    while(flag) {
+    while(flag){
         randX = rand() % (getBoardSizeX()- 2)+ 1; // makes sure not on x border 
         randY = rand() % (getBoardSizeY()- 2)+ 1; //make sure not y border 
-        if (randX == blockOff.x && randY == blockOff.y) {
+        if (randX == blockOff.x && randY == blockOff.y){
             flag = true;
         }
         else{
@@ -116,6 +120,32 @@ void GameMechs::generateFood(objPos blockOff)
         }
     }
     foodPos.setObjPos(randX, randY, 'o');
+}
+
+void GameMechs::getFoodPos(objPos &returnPos)
+{
+    foodPos.getObjPos(returnPos);
+}
+
+
+
+
+/*
+void GameMechs::generateFood(objPos blockOff)
+{
+    srand(time(NULL));
+
+    do {
+        // Generate random x and y coordinates
+        foodPos.x = (rand() % (boardSizeX - 2)) + 1; // cols
+        foodPos.y = (rand() % (boardSizeY - 2)) + 1; // rows
+
+    } while (foodPos.isPosEqual(&blockOff) || foodPos.isPosEqual(new objPos(0, 0, ' ')) || foodPos.isPosEqual(new objPos(boardSizeX - 1, boardSizeY - 1, ' ')));
+
+    // Set the food symbol
+    foodPos.symbol = 'o';
+<<<<<<< HEAD
+=======
 
 
     //generate random x n y coord, and make sure they are not border or blockoff pos
@@ -129,5 +159,5 @@ void GameMechs::generateFood(objPos blockOff)
 void GameMechs::getFoodPos(objPos &returnPos)
 {
     returnPos = foodPos;
-}
 
+    */

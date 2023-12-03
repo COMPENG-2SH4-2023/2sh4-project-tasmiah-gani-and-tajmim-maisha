@@ -55,6 +55,12 @@ void Initialize(void)
     
     myPlayer = new Player(myGM);
 
+    //Think about when to generate the new food...
+
+    //Think about whether you want to set up a debug key to call the food generation routine fro verification 
+
+    //remember, generateFood() requires player reference. You will need to provide it AFTER player object is instantiated
+
 
 }
 
@@ -89,6 +95,8 @@ void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
+
+    myGM->generateFood();
 
     //clear input field in GM 
     myGM->clearInput();

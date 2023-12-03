@@ -10,11 +10,11 @@ GameMechs::GameMechs()
     loseFlag = false;
     boardSizeX = 30;      //default board size
     boardSizeY = 15;
-/*
+
     foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of board to not be displayed
 
     generateFood(objPos(-1, -1, ' ')); // Generate initial food, leaving room for random gen 
-*/
+
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -93,13 +93,13 @@ void GameMechs::incrementScore(int amount)
     score += amount;
 }
 */
+
 void GameMechs::clearInput()
 {
     input = '\0';
 }
 
-GameMechs* thisGMRef
-mainGameMechsRef = thisGMRef;
+
 
 void GameMechs::generateFood(objPos blockOff)
 {
@@ -167,7 +167,20 @@ void GameMechs::getFoodPos(objPos &returnPos)
 
     // Set the food symbol
     foodPos.symbol = 'o';
+<<<<<<< HEAD
+=======
 
+
+    //generate random x n y coord, and make sure they are not border or blockoff pos
+
+    //check x and y against 0 and boardSize X/Y
+
+    //remember, in objPos class you have an isPosEqual() method. Use this instead of comparing element-by-element
+    //for your convenience
+}
+
+void GameMechs::getFoodPos(objPos &returnPos)
+{
     returnPos = foodPos;
 
     */

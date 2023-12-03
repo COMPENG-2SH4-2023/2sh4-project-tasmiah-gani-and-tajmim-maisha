@@ -96,7 +96,8 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
 
-    myGM->generateFood();
+    myGM.generateFood(playerPos);
+    myGM.generateFood(objPos(-1, -1, ' '));
 
     //clear input field in GM 
     myGM->clearInput();

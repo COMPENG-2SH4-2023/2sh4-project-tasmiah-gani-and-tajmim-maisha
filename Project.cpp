@@ -120,7 +120,6 @@ void DrawScreen(void)
                     myGM->getBoardSizeY(),
                     myPos.x, myPos.y, myPos.symbol);
 
-
     //Print board and moving character on screen
     for(int row = 0; row < myGM->getBoardSizeY(); row++) {
         for(int col = 0; col < myGM->getBoardSizeX(); col++) {
@@ -134,6 +133,7 @@ void DrawScreen(void)
             else if(myPos.y == row && myPos.x == col) {
                 gameBoard[row][col] = myPos.symbol;
             }
+
 
             //print empty space on board
             else {

@@ -7,19 +7,26 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
-    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2, mainGameMechsRef->getBoardSizeY()/2, '*');
+    
+    objPos tempPos;
+    tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2,
+                    mainGameMechsRef->getBoardSizeY()/2, '*');
+
+    playerPosList = new objPosArrayList();
+    playerPosList.insertHead(tempPos);
 }
 
 
 Player::~Player()
 {
     //no heap member yet-wait for iteration 3
+    delete playerPosList;
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+objPosArrayList* Player::getPlayerPos()
 {
     // return the reference to the playerPos arrray list
-    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
+    return playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -81,60 +88,48 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-    
-
-    playerPos.setObjPos(playerPos.x, playerPos.y, '*');
+    objPos currHead;        // holding the pos info of the current head
+    playerPosList.getHeadElement(currHead);
 
     switch(myDir) {
 
-        case STOP:
-            break;
-
         case UP:
-
-            playerPos.setObjPos(playerPos.x, playerPos.y-1, '*');
-            // playerPos.y--;               //move up array
-            // moveCount++;
-            if (playerPos.y < 1) {       // when playerPos is out of bound at the top of the board,
-                // playerPos.y = 14;         // character is moved to the bottom on the board (wraparound)
-                playerPos.setObjPos(playerPos.x, 13, '*');
-
+            currHead.y--;               //move up array
+            if (currHead.y < 1) {       // when playerPos is out of bound at the top of the board,
+                                         // character is moved to the bottom on the board (wraparound)
+                currHead.y = mainGameMechsRef->getBoardSizeY() - 2;
             }
             break;
 
         case DOWN:
-            playerPos.setObjPos(playerPos.x, playerPos.y+1, '*');
-            // playerPos.y++;               //move down array
-            // moveCount++;
-            if (playerPos.y > 13) {
-                // playerPos.y = 1;
-                playerPos.setObjPos(playerPos.x, 1, '*');
+            currHead.y++;               //move down array
+            if (currHead.y >= mainGameMechsRef->getBoardSizeY()) {
+                currHead.y = 1;
             }
             break;
 
         case LEFT:
-            playerPos.setObjPos(playerPos.x-1, playerPos.y, '*');
-            // playerPos.x--;               //move left of array
-            // moveCount++;
-            if (playerPos.x < 1) {
-                // playerPos.x = 29;
-                playerPos.setObjPos(28, playerPos.y, '*');
+            currHead.x--;               //move left of array
+            if (currHead.x < 1) {
+                currHead.x = mainGameMechsRef->getBoardSizeX() - 2;
             }
             break;
 
         case RIGHT:
-            playerPos.setObjPos(playerPos.x+1, playerPos.y, '*');
-            // playerPos.x++;               //move right of array
-            // moveCount++;
-            if (playerPos.x > 28) {
-                // playerPos.x = 1;
-                playerPos.setObjPos(1, playerPos.y, '*');
+            currHead.x++;               //move right of array
+            if (currHead.x >= mainGameMechsRef->getBoardSizeX()) {
+                currHead.x = 1;
             }
             break;
-        
+
+        case STOP:
         default:
             break;
     }
+    // new current head should be inserted to the head of the list,
+    playerPosList->insertHead(currHead);
+    
+    // then, remove tail
+    playerPosList->removeTail();
 
 }
-

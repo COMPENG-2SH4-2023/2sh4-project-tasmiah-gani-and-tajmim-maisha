@@ -90,7 +90,8 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
 
-    //clear input field in GM 
+    //clear input field in GM
+    // so to not repeatedly process the input
     myGM->clearInput();
 }
 
@@ -136,6 +137,9 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
+    MacUILib_printf("Score: %d, Player Pos: <%d, %d>\n",
+    myGM->getScore(), myPos.x, myPos.y);
+
 
 
 }
@@ -150,8 +154,11 @@ void CleanUp(void)
 {
 
 //delete GM object from heap
-    delete myGM;
     MacUILib_clearScreen();    
   
     MacUILib_uninit();
+
+    // remove heap instances
+    delete myGM;
+    delete myPlayer;
 }

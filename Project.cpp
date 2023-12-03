@@ -146,7 +146,19 @@ void DrawScreen(void)
             if(0 == row || (myGM->getBoardSizeY()-1) == row || 0 == col || (myGM->getBoardSizeX()-1) == col) {
                 printf("%c", '#');
             }
-
+            else if(j == tempPos.x && i == tempPos.y)
+            {
+                printf("%c", tempPos.symbol);
+            }
+            else if(j == myFoodPos.x && i == myFoodPos.y)
+            {
+                printf("%c", myFoodPos.symbol);
+            }
+            else
+            {
+                printf("%c", ' ');
+            }
+/*
             //print moving character
             else if(myPos.y == row && myPos.x == col) {
                 gameBoard[row][col] = myPos.symbol;
@@ -164,6 +176,8 @@ void DrawScreen(void)
         }
 
         printf("\n");
+        */
+
     }
 
     MacUILib_printf("Score: %d, Player Pos: <%d, %d>\n",

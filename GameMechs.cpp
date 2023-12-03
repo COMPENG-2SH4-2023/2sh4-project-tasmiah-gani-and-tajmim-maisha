@@ -131,9 +131,6 @@ void GameMechs::generateFood(objPos blockOff)
         {
             foodPos.setObjPos(randX, randY, 'o');
         }
-
-
-
     }
 }
 

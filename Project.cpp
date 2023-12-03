@@ -96,7 +96,9 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
 
-    myGM->generateFood(myPlayer->getPlayerPos());
+
+    myGM->generateFood(myPos);
+
     //clear input field in GM
     // so to not repeatedly process the input
     myGM->clearInput();
@@ -134,6 +136,8 @@ void DrawScreen(void)
             else if(myPos.y == row && myPos.x == col) {
                 gameBoard[row][col] = myPos.symbol;
             }
+
+            
 
             //print empty space on board
             else {

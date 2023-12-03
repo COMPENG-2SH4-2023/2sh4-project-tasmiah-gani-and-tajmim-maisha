@@ -7,6 +7,7 @@ GameMechs::GameMechs()
 {
     input = 0;
     exitFlag = false;
+    loseFlag = false;
     boardSizeX = 30;      //default board size
     boardSizeY = 15;
 
@@ -20,6 +21,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 {
     input = 0;
     exitFlag = false;
+    loseFlag = false;
     boardSizeX = boardX;     //default board size
     boardSizeY = boardY;
 
@@ -100,14 +102,18 @@ void GameMechs::generateFood(objPos blockOff)
 {
     srand(time(NULL));
 
-    do{
-    //generate random x n y coord, and make sure they are not border or blackoff pos
-        foodPos.x = (rand() % (boardSizeX -2))+ 1; //cols
-        foodPos.y = (rand() % (boardSizeY -2))+ 1; //rows
-    } while(foodPos.isPosEqual(&blockOff) || foodPos.x == 0 || foodPos.y == 0 || foodPos.x == boardSizeX - 1 || foodPos.y == boardSizeY - 1);
+    do {
+        // Generate random x and y coordinates
+        foodPos.x = (rand() % (boardSizeX - 2)) + 1; // cols
+        foodPos.y = (rand() % (boardSizeY - 2)) + 1; // rows
+
+    } while (foodPos.isPosEqual(&blockOff) || foodPos.isPosEqual(new objPos(0, 0, ' ')) || foodPos.isPosEqual(new objPos(boardSizeX - 1, boardSizeY - 1, ' ')));
 
     // Set the food symbol
     foodPos.symbol = 'o';
+
+
+    //generate random x n y coord, and make sure they are not border or blockoff pos
 
     //check x and y against 0 and boardSize X/Y
 

@@ -114,6 +114,8 @@ void DrawScreen(void)
 
     MacUILib_clearScreen();
 
+    objPosArrayList* playerBody = getPlayerPos();
+
     // objPos tempPos;
     myPlayer->getPlayerPos(myPos);
 
@@ -142,7 +144,7 @@ void DrawScreen(void)
 
             //print game board
             if(0 == row || (myGM->getBoardSizeY()-1) == row || 0 == col || (myGM->getBoardSizeX()-1) == col) {
-                gameBoard[row][col] = '#';
+                printf("%c", '#');
             }
 
             //print moving character
@@ -152,22 +154,22 @@ void DrawScreen(void)
 
             //print food character
             else if(myfoodPos.y == row && myfoodPos.x == col) {
-                gameBoard[row][col] = myfoodPos.symbol;
+                printf("%c", my.symbol);
             }
 
             //print empty space on board
             else {
-                gameBoard[row][col] = ' ';
+                printf("%c", ' ');
             }
-            MacUILib_printf("%c", gameBoard[row][col]);
         }
-        MacUILib_printf("\n");
+
+        printf("\n");
     }
 
     MacUILib_printf("Score: %d, Player Pos: <%d, %d>\n",
     myGM->getScore(), myPos.x, myPos.y);
 
-    
+
 }
 
 void LoopDelay(void)

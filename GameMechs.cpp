@@ -117,7 +117,7 @@ void GameMechs::generateFood(objPos blockOff)
     int randY = 0;
     srand(time(NULL)); //seed the time 
 
-    bool flag = true; 
+    bool flag = false;
     while(!flag){
         randX = rand() % (getBoardSizeX()- 2)+ 1; // makes sure not on x border 
         randY = rand() % (getBoardSizeY()- 2)+ 1; //make sure not y border 
@@ -131,9 +131,6 @@ void GameMechs::generateFood(objPos blockOff)
         {
             foodPos.setObjPos(randX, randY, 'o');
         }
-
-
-
     }
 }
 

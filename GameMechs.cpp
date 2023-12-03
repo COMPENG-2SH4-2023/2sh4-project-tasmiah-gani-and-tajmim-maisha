@@ -1,12 +1,18 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
 
+//Think about where to seed the RNG
+
 GameMechs::GameMechs()
 {
     input = 0;
     exitFlag = false;
     boardSizeX = 30;      //default board size
     boardSizeY = 15;
+
+    foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of board to not be displayed
+
+    generateFood(objPos(-1, -1, ' ')); // Generate initial food, leaving room for random gen 
 
 }
 
@@ -23,7 +29,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 
 
-bool GameMechs::getExitFlagStatus()
+bool GameMechs::getExitFlagStatus() 
 {
     return exitFlag;
 
@@ -90,4 +96,24 @@ void GameMechs::clearInput()
     input = '\0';
 }
 
+void GameMechs::generateFood(objPos blockOff)
+{
+    srand(time(NULL));
+
+    do{
+    //generate random x n y coord, and make sure they are not border or blackoff pos
+        foodPos.x = (rand() % (boardSizeX -2))+ 1; //cols
+        foodPos.y = (rand() % (boardSizeY -2))+ 1; //rows
+    } while(foodPos.isPosEqual(blockOff));
+
+    //check x and y against 0 and boardSize X/Y
+
+    //remember, in objPos class you have an isPosEqual() method. Use this instead of comparing element-by-element
+    //for your convenience
+}
+
+void GameMechs::getFoodPos(objPos &returnPos)
+{
+    returnPos = foodPos;
+}
 

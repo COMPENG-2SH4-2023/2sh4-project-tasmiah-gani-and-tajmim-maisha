@@ -13,7 +13,7 @@ GameMechs::GameMechs()
 
     foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of board to not be displayed
 
-    generateFood(objPos(-1, -1, ' ')); // Generate initial food, leaving room for random gen 
+    //generateFood(objPos(-1, -1, ' ')); // Generate initial food, leaving room for random gen 
 
 }
 
@@ -104,22 +104,37 @@ void GameMechs::clearInput()
 void GameMechs::generateFood(objPos blockOff)
 {
 
+    //generate random x n y coord, and make sure they are not border or blockoff pos
+
+    //check x and y against 0 and boardSize X/Y
+
+    //remember, in objPos class you have an isPosEqual() method. Use this instead of comparing element-by-element
+    //for your convenience
+
+
+
     int randX = 0;
     int randY = 0;
     srand(time(NULL)); //seed the time 
 
     bool flag = true; 
-    while(flag){
+    while(!flag){
         randX = rand() % (getBoardSizeX()- 2)+ 1; // makes sure not on x border 
         randY = rand() % (getBoardSizeY()- 2)+ 1; //make sure not y border 
         if (randX == blockOff.x && randY == blockOff.y){
-            flag = true;
+             flag = false;
         }
         else{
-            flag = false;
+            flag = true;
         }
+        if(flag)
+        {
+            foodPos.setObjPos(randX, randY, 'o');
+        }
+
+
+
     }
-    foodPos.setObjPos(randX, randY, 'o');
 }
 
 void GameMechs::getFoodPos(objPos &returnPos)
@@ -135,6 +150,29 @@ void GameMechs::generateFood(objPos blockOff)
 {
     srand(time(NULL));
 
+    //generate random x n y coord, and make sure they are not border or blockoff pos
+    //check x and y against 0 and boardSize X/Y
+    //remember, in objPos class you have an isPosEqual() method. Use this instead of comparing element-by-element
+    //for your convenience
+    do {
+        // Generate random x and y coordinates within the boardSize
+        foodPos.setObjPos(rand() % (boardSizeX - 2) + 1, rand() % (boardSizeY - 2) + 1, 'o');
+
+    } while (foodPos.isPosEqual(blockOff));
+
+
+}
+
+void GameMechs::getFoodPos(objPos &returnPos)
+{
+    returnPos = foodPos;
+}
+
+
+
+//Copy of what I did
+
+
     do {
         // Generate random x and y coordinates
         foodPos.x = (rand() % (boardSizeX - 2)) + 1; // cols
@@ -148,16 +186,8 @@ void GameMechs::generateFood(objPos blockOff)
 =======
 
 
-    //generate random x n y coord, and make sure they are not border or blockoff pos
 
-    //check x and y against 0 and boardSize X/Y
-
-    //remember, in objPos class you have an isPosEqual() method. Use this instead of comparing element-by-element
-    //for your convenience
 }
 
-void GameMechs::getFoodPos(objPos &returnPos)
-{
-    returnPos = foodPos;
 
     */

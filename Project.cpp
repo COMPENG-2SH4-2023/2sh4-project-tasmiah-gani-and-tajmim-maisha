@@ -111,7 +111,7 @@ void DrawScreen(void)
     objPos tempBody;
     objPos myFoodPos;
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
-    myGM->getFoodPos(myfoodPos);
+    myGM->getFoodPos(myFoodPos);
     
 
     // Game header message
@@ -125,7 +125,7 @@ void DrawScreen(void)
             drawn = false;
             
             //DRAWING THE PLAYER: iterate through every element in the list...
-            for(int k = 0; k < playerBody->getSize; k++) {
+            for(int k = 0; k < playerBody->getSize(); k++) {
                 playerBody->getElement(tempBody, k);
 
                 if(tempBody.x == j && tempBody.y == i) {
@@ -170,7 +170,7 @@ void DrawScreen(void)
     MacUILib_printf("Score: %d\n", myGM->getScore());
 
     MacUILib_printf("food Pos: <%d, %d> + %c\n",
-                    myfoodPos.x, myfoodPos.y, myfoodPos.symbol);
+                    myFoodPos.x, myFoodPos.y, myFoodPos.symbol);
 
     //WELCOME MESSAGE?
 

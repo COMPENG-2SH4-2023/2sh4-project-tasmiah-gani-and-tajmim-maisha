@@ -3,6 +3,7 @@
 
 Player::Player(GameMechs* thisGMRef)
 {
+    //
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
 
@@ -14,6 +15,7 @@ Player::Player(GameMechs* thisGMRef)
 
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(tempPos);
+
 }
 
 
@@ -32,14 +34,11 @@ objPosArrayList* Player::getPlayerPos()
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
+    //
+    //
 
-    //where to get input?? How do I check for input
-    //hint 1. not by calling MacUILib_getchar()
-    //     2. coordinate eith teammeneber (GmaeMech class)
-    //     3. there will be a method in GameM
 
     char input = mainGameMechsRef->getInput();
-
 
     switch(input)
     {                      
@@ -49,7 +48,7 @@ void Player::updatePlayerDir()
             break;
 
         
-        //Movement inputs
+        //Movement inputs:
         case 'w':
         case 'W':
             if(myDir != UP && myDir != DOWN) {
@@ -131,5 +130,26 @@ void Player::movePlayer()
     
     // then, remove tail
     playerPosList->removeTail();
+
+}
+
+
+bool Player::selfCollision() {
+    objPos head;
+    playerPosList->getHeadElement(head);
+
+    objPos tempBody;
+
+    // Checks for collision by iterating through the body of the snake
+    for(int i = 0; i < (playerPosList->getSize() - 2); i++){
+        playerPosList->getElement(tempBody, i);
+
+        // If yes, snake collides with body
+        if(tempBody.isPosEqual(&head)) {
+            return true;
+        }
+    }
+    // If no, snake doesn't collide with body
+    return false;
 
 }

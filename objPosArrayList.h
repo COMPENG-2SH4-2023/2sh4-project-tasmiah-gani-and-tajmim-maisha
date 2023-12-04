@@ -13,10 +13,12 @@ class objPosArrayList
         int arrayCapacity;
 
     public:
-        objPosArrayList();
-        ~objPosArrayList();
+        objPosArrayList();  // constructor
+        ~objPosArrayList(); // deconstructor
 
         int getSize();
+
+        // Moving snake:
         void insertHead(objPos thisPos);
         void insertTail(objPos thisPos);
         void removeHead();

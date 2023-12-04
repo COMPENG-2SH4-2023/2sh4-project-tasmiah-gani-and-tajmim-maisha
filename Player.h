@@ -21,7 +21,13 @@ class Player
 
         objPosArrayList* getPlayerPos();
         void updatePlayerDir();
+
         void movePlayer();
+        //need more actions here
+        // - after inserting the head but before removing the tail
+        // - check if new head position collides with food
+        // - If yes, increment the score in GM, and do not remove tail
+        // otherwise, remove tail and move on.
 
     private:
         objPosArrayList *playerPosList;

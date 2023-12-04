@@ -27,6 +27,7 @@ GameMechs::GameMechs(int boardX, int boardY)
     boardSizeX = boardX;     //default board size
     boardSizeY = boardY;
     score = 0;
+
     foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of board, to not be displayed
 
 
@@ -109,7 +110,7 @@ void GameMechs::incrementScore(int amount)
 
 //FOOD GENERATION PROCESSINGS:
 
-void GameMechs::generateFood(objPos blockOff)
+void GameMechs::generateFood(objPos *blockOff)
 {
 
     //generate food on random x n y coordinates
@@ -122,7 +123,7 @@ void GameMechs::generateFood(objPos blockOff)
     while(!flag){
         randX = rand() % (getBoardSizeX()- 2)+ 1; // makes sure not on x border 
         randY = rand() % (getBoardSizeY()- 2)+ 1; //make sure not y border 
-        if (randX == blockOff.x && randY == blockOff.y){
+        if (randX == blockOff->x && randY == blockOff->y){
              flag = false;
         }
         else{
@@ -133,7 +134,6 @@ void GameMechs::generateFood(objPos blockOff)
             foodPos.setObjPos(randX, randY, 'o');
         }
 
-
         //Figure out if we need to put the blockOff array thing 
     }
 }
@@ -141,7 +141,7 @@ void GameMechs::generateFood(objPos blockOff)
 //Getter to get current food position
 void GameMechs::getFoodPos(objPos &returnPos)
 {
-    returnPos.getObjPos(foodPos.x, foodPos.y, foodPos.symbol);
+    returnPos.setObjPos(foodPos.x, foodPos.y, foodPos.symbol);
 }
 
 

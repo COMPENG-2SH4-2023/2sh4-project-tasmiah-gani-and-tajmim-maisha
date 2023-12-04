@@ -19,7 +19,6 @@ Player* myPlayer;
 //This is a makeshift setup, so I don't hav eto touch generateItem yet. 
 //think about how to change myfoodPos into an array list operation
 //you have to do this by yourself 
-//------objPos myfoodPos{-1, -1, 'o'};       //--------------T
 
 
 void Initialize(void);
@@ -28,9 +27,6 @@ void RunLogic(void);
 void DrawScreen(void);
 void LoopDelay(void);
 void CleanUp(void);
-
-char gameBoard[15][30];
-
 
 
 int main(void)
@@ -60,21 +56,13 @@ void Initialize(void)
     // Create a gameMechanics object on the heap and initialize its fields    
     myGM = new GameMechs(30, 15); //makes board size 30x15
     myPlayer = new Player(myGM);
-    myGM->generateFood(tempPos); //myPlayer->getPlayerPos()
-
-    
-
-    objPos tempPos{-1, -1, 'o'};
-    myGM->generateFood(tempPos);
-
+    myGM->generateFood(myPlayer->getPlayerPos()); //myPlayer->getPlayerPos()
 
 }
 
 void GetInput(void)
 {
-    // Collects the input ASCII character into the corresponding field in the gameMechs object 
-
-
+    // Collects the input ASCII character into the corresponding field in the gameMechs object
     myGM-> getInput();
     
 }
@@ -95,7 +83,7 @@ void RunLogic(void)
 
     //Food Collection
     playerBody->getHeadElement(tempBody);
-    if(tempBody.isPosEqual(&tempFood))
+    if(tempBody.isPosEqual(&myFoodPos))
     {
         myGM->incrementScore();
         newInsert.setObjPos(tempBody.x, tempBody.y, '*');
@@ -161,7 +149,8 @@ void DrawScreen(void)
             {
                 MacUILib_printf("%c", myFoodPos.symbol);
             }
-            //Fill Board with spaces 
+
+            //Fill Board with empty spaces
             else
             {
                 MacUILib_printf("%c", ' ');
@@ -172,10 +161,10 @@ void DrawScreen(void)
 
     //------------------------------------------------------------------------
     
-    MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n",
-                    myGM->getBoardSizeX(),
-                    myGM->getBoardSizeY(),
-                    tempBody.x, tempBody.y, tempBody.symbol);
+    // MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n",
+    //                 myGM->getBoardSizeX(),
+    //                 myGM->getBoardSizeY(),
+    //                 tempBody.x, tempBody.y, tempBody.symbol);
 
 
     MacUILib_printf("Score: %d\n", myGM->getScore());
@@ -186,14 +175,12 @@ void DrawScreen(void)
     //WELCOME MESSAGE?
 
     // QUIT GAME MESSAGE
-    if(myGM->getExitFlagStatus())
-    {
+    if(myGM->getExitFlagStatus()) {
         MacUILib_printf("Quit game."); 
     }
 
     // LOST GAME MESSAGE        
-    if(myGM->getLoseFlagStatus())
-    {
+    if(myGM->getLoseFlagStatus()) {
         MacUILib_printf("You LOST!"); 
         myGM->setExitTrue();
     }
@@ -211,7 +198,7 @@ void CleanUp(void)
 {
 
 //delete GM object from heap
-    MacUILib_clearScreen();    
+    // MacUILib_clearScreen();    
   
     MacUILib_uninit();
 

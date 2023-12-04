@@ -1,6 +1,6 @@
 #include <iostream>
 
-//Class Libraries 
+// Class Libraries:
 #include "MacUILib.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
@@ -42,6 +42,7 @@ int main(void)
 
     Initialize();
 
+    //Run program when the exit flag is false
     while(myGM->getExitFlagStatus() == false)  
     {
         GetInput();
@@ -78,10 +79,8 @@ void GetInput(void)
 {
     // Collects the input ASCII character into the corresponding field in the gameMechs object 
 
-    //access correct info using getter method
-    char input = myGM-> getInput();
-    //collects input char 
-    myGM->setInput(input);
+
+    myGM-> getInput();
     
 }
 
@@ -114,7 +113,7 @@ void RunLogic(void)
     }
 
     //Self collision detection
-    if(myPlayer->checkSelfCollision())
+    if(myPlayer->selfCollision())
     {
         myGM->setLoseFlag();
     }
@@ -128,9 +127,6 @@ void DrawScreen(void)
 
     MacUILib_clearScreen();
 
-    // Game header message
-    MacUILib_printf("-------------------GROW UR SSSSSSNAKE!!!---------------------\n"); 
-
     //initializing variables for this func:
     bool drawn;
     objPos tempBody;
@@ -138,6 +134,9 @@ void DrawScreen(void)
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
     myGM->getFoodPos(myfoodPos);
     
+
+    // Game header message
+    MacUILib_printf("-------------------GROW UR SSSSSSNAKE!!!---------------------\n"); 
 
     //GAMEBOARD PRINTING
     

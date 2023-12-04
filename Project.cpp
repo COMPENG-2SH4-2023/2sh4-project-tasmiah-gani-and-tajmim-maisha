@@ -138,8 +138,9 @@ void DrawScreen(void)
             drawn = false;
             
             //iterate through every element in the list
-            for(int k = 0; k < playerBody->getSize; K++) {
-                playerBody->getElement(tempBody, i);
+            for(int k = 0; k < playerBody->getSize; k++) {
+                playerBody->getElement(tempBody, k);
+
                 if(tempBody.x == j && tempBody.y == i) {
                     MacUILib_printf("%c", tempBody.symbol);
                     drawn = true;
@@ -165,7 +166,7 @@ void DrawScreen(void)
                 MacUILib_printf("%c", ' ');
             }
         }
-        MacUILib_printf("\n");
+        printf("\n");
     }
 
     //------------------------------------------------------------------------
@@ -177,7 +178,7 @@ void DrawScreen(void)
 
 
     MacUILib_printf("Score: %d\n", myGM->getScore());
-    
+
     MacUILib_printf("food Pos: <%d, %d> + %c\n",
                     myfoodPos.x, myfoodPos.y, myfoodPos.symbol);
 

@@ -89,7 +89,7 @@ void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
     objPos currentHead;        // holding the pos info of the current head
-    playerPosList.getHeadElement(currentHead);
+    playerPosList->getHeadElement(currentHead);             //-----------------------------------------
 
     switch(myDir) {
 

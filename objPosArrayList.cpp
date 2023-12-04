@@ -22,9 +22,7 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    // need error check-what if list size is at capacity?
-    //check if listSize is equal to arrayCapacity. If yes, at capacity don't insert.
-
+    // Return nothing if listSize reaches the arrayCapacity
     if(listSize == arrayCapacity) {
         return;
     }
@@ -40,10 +38,12 @@ void objPosArrayList::insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
+    // Return nothing if listSize reaches the arrayCapacity
     if(listSize == arrayCapacity) {
         return;
     }
 
+    // add 'tail' at the end of the array of the snake body
     aList[listSize++].setObjPos(thisPos);
 }
 
@@ -54,7 +54,7 @@ void objPosArrayList::removeHead()
     }
 
     for (int i = 0; i < listSize - 1; i++) {
-        aList[i].setObjPos(aList[i + 1]);
+        aList[i].setObjPos(aList[i + 1]);       // shuffle all elements towards the head
     }
 
     listSize--;
@@ -67,6 +67,7 @@ void objPosArrayList::removeTail()
         return;
     }
 
+    // delete 'tail' at the end of the array of the snake body
     listSize--;
 }
 

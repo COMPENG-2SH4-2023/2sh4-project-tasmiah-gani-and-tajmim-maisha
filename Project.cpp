@@ -154,7 +154,7 @@ void DrawScreen(void)
                     MacUILib_printf("%c", tempBody.symbol);
                     drawn = true;
                     break;
-
+                    
                 }
             }
 

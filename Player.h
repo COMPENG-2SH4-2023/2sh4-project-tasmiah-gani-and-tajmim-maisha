@@ -7,21 +7,16 @@
 
 class Player
 {
-    // Construct the remaining declaration from the project manual.
-
-    // Only some sample members are included here
-
-    // You will include more data members and member functions to complete your design.
-
     public:
         enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
 
-        Player(GameMechs* thisGMRef);
-        ~Player();
+        Player(GameMechs* thisGMRef);   // constructor
+        ~Player();                      // deconstructor
 
         objPosArrayList* getPlayerPos();
-        void updatePlayerDir();
 
+
+        void updatePlayerDir();
         void movePlayer();
         //need more actions here
         // - after inserting the head but before removing the tail
@@ -29,7 +24,11 @@ class Player
         // - If yes, increment the score in GM, and do not remove tail
         // otherwise, remove tail and move on.
 
+        bool selfCollision();
+
     private:
+
+
         objPosArrayList *playerPosList;
 
         enum Dir myDir;

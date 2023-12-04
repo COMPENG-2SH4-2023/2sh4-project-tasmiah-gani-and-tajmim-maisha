@@ -7,7 +7,6 @@
 #include "GameMechs.h"
 #include "Player.h"
 
-
 using namespace std;
 
 #define DELAY_CONST 100000
@@ -22,9 +21,6 @@ Player* myPlayer;
 //you have to do this by yourself 
 //------objPos myfoodPos{-1, -1, 'o'};       //--------------T
 
-
-bool exitFlag;
-bool collide;
 
 void Initialize(void);
 void GetInput(void);
@@ -67,7 +63,6 @@ void Initialize(void)
     myGM->generateFood(tempPos); //myPlayer->getPlayerPos()
 
     
-    collide = true;
 
     objPos tempPos{-1, -1, 'o'};
     myGM->generateFood(tempPos);
@@ -97,10 +92,6 @@ void RunLogic(void)
     objPosArrayList* playerBody = myPlayer->getPlayerPos();
     myGM->getFoodPos(myFoodPos);
 
-    // if(collide) {
-    //     myGM->generateFood(myfoodPos);  //----------T
-    //     collide = false;
-    // }
 
     //Food Collection
     playerBody->getHeadElement(tempBody);

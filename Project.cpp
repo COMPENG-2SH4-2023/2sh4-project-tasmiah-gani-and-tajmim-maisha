@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "objPosArrayList.h"
 #include "GameMechs.h"
 #include "Player.h"
 
@@ -13,7 +14,13 @@ using namespace std;
 GameMechs* myGM;
 
 objPos myPos;
-objPos myfoodPos;       //--------------T
+
+//This is a makeshift setup, so I don't hav eto touch generateItem yet. 
+//think about how to change myfoodPos into an array list operation
+//you have to do this by yourself 
+objPos myfoodPos{-1, -1, 'o'};       //--------------T
+
+
 Player* myPlayer;
 
 
@@ -135,8 +142,8 @@ void DrawScreen(void)
     MacUILib_printf("food: <%d, %d> + %c\n",
                     myfoodPos.x, myfoodPos.y, myfoodPos.symbol);
 
-
-
+    MacUILib_printf("Score: %d, Player Pos: <%d, %d>\n",
+    myGM->getScore(), myPos.x, myPos.y);
 
     //Print board and moving character on screen
     for(int row = 0; row < myGM->getBoardSizeY(); row++) {
@@ -180,10 +187,8 @@ void DrawScreen(void)
 
     }
 
-    MacUILib_printf("Score: %d, Player Pos: <%d, %d>\n",
-    myGM->getScore(), myPos.x, myPos.y);
 
-
+}
 }
 
 void LoopDelay(void)

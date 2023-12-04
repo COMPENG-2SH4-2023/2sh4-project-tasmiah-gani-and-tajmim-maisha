@@ -141,7 +141,7 @@ bool Player::selfCollision() {
     objPos tempBody;
 
     // Checks for collision by iterating through the body of the snake
-    for(int i = 0; i < (playerPosList->getSize() - 2); i++){
+    for(int i = 2; i < playerPosList->getSize(); i++){
         playerPosList->getElement(tempBody, i);
 
         // If yes, snake collides with body

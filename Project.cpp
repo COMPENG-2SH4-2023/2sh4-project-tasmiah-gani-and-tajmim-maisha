@@ -168,7 +168,8 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    //--------------------------------------------
+    //------------------------------------------------------------------------
+    
     MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n",
                     myGM->getBoardSizeX(),
                     myGM->getBoardSizeY(),

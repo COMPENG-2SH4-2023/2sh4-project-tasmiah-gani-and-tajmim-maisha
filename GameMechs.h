@@ -1,6 +1,7 @@
 #ifndef GAMEMECHS_H
 #define GAMEMECHS_H
 
+//Libraries for random generator
 #include <cstdlib> //provides srand() and rand()
 #include <time.h> //can be replaced by <ctime>
                   //provides time()
@@ -34,6 +35,8 @@ class GameMechs
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
+
+        ~GameMechs();
         
         bool getExitFlagStatus();
         bool getLoseFlagStatus();
@@ -51,7 +54,7 @@ class GameMechs
         int getBoardSizeX();
         int getBoardSizeY();
 
-        void generateFood(objPos blockOff); //you need to upgrade this somehow...
+        void generateFood(objPos *blockOff); //you need to upgrade this somehow...
         //Need to accept the player body array list 
         //go through each array list element to make sure they are all 
         //blocked off form random food generation 

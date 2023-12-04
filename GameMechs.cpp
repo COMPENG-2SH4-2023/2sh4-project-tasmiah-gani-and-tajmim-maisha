@@ -5,31 +5,40 @@
 
 GameMechs::GameMechs()
 {
+    //initializing imp variables of function 
     input = 0;
     exitFlag = false;
     loseFlag = false;
     boardSizeX = 30;      //default board size
     boardSizeY = 15;
+    score = 0;
+    foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of board, to not be displayed
 
-    foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of board to not be displayed
-
-    //generateFood(objPos(-1, -1, ' ')); // Generate initial food, leaving room for random gen 
 
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
+    
+    //initializing imp variables of specialized constructor
     input = 0;
     exitFlag = false;
     loseFlag = false;
     boardSizeX = boardX;     //default board size
     boardSizeY = boardY;
+    score = 0;
+    foodPos.setObjPos(-1, -1, 'o'); //initialize foodPos outside of board, to not be displayed
+
 
 }
 
-// do you need a destructor?
 
+GameMechs::~GameMechs()
+{
+    //commentt 
+}
 
+//Getters
 
 bool GameMechs::getExitFlagStatus() 
 {
@@ -61,6 +70,10 @@ int GameMechs::getBoardSizeY()
     return boardSizeY;
 }
 
+int GameMechs::getScore()
+{
+    return score;
+}
 
 void GameMechs::setExitTrue()
 {
@@ -77,14 +90,14 @@ void GameMechs::setInput(char this_input)
     input = this_input;
 }
 
-int GameMechs::getScore()
-{
-    return score;
-}
-
 void GameMechs::incrementScore()
 {
     score++;
+}
+
+void GameMechs::clearInput()
+{
+    input = '\0';
 }
 
 /*/DEPENDS ON IF WE MAKE PROGRAM TO INCREMENT MORE THAN ONE AT A TIME
@@ -94,25 +107,13 @@ void GameMechs::incrementScore(int amount)
 }
 */
 
-void GameMechs::clearInput()
-{
-    input = '\0';
-}
-
-
+//FOOD GENERATION PROCESSINGS:
 
 void GameMechs::generateFood(objPos blockOff)
 {
 
-    //generate random x n y coord, and make sure they are not border or blockoff pos
-
-    //check x and y against 0 and boardSize X/Y
-
-    //remember, in objPos class you have an isPosEqual() method. Use this instead of comparing element-by-element
-    //for your convenience
-
-
-
+    //generate food on random x n y coordinates
+    //make sure they are not game border or blockoff pos
     int randX = 0;
     int randY = 0;
     srand(time(NULL)); //seed the time 
@@ -131,12 +132,16 @@ void GameMechs::generateFood(objPos blockOff)
         {
             foodPos.setObjPos(randX, randY, 'o');
         }
+
+
+        //Figure out if we need to put the blockOff array thing 
     }
 }
 
+//Getter to get current food position
 void GameMechs::getFoodPos(objPos &returnPos)
 {
-    foodPos.getObjPos(returnPos);
+    returnPos.getObjPos(foodPos.x, foodPos.y, foodPos.symbol);
 }
 
 

@@ -1,4 +1,6 @@
 #include <iostream>
+
+//Class Libraries 
 #include "MacUILib.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
@@ -10,7 +12,7 @@ using namespace std;
 
 #define DELAY_CONST 100000
 
-// Global pointer to specific classes
+// Global pointer to the instances of the two class
 GameMechs* myGM;
 Player* myPlayer;
 
@@ -61,16 +63,11 @@ void Initialize(void)
     // Create a gameMechanics object on the heap and initialize its fields    
     myGM = new GameMechs(30, 15); //makes board size 30x15
     myPlayer = new Player(myGM);
+    myGM->generateFood(tempPos); //myPlayer->getPlayerPos()
+
     
     collide = true;
 
-    //Think about when to generate the new food...
-
-    //Think about whether you want to set up a debug key to call the food generation routine fro verification 
-
-    //remember, generateFood() requires player reference. You will need to provide it AFTER player object is instantiated
-    // this is a makeshift setup so I don't have to touch generateItem yet
-    // you need to do this yourself :)
     objPos tempPos{-1, -1, 'o'};
     myGM->generateFood(tempPos);
 
@@ -79,41 +76,51 @@ void Initialize(void)
 
 void GetInput(void)
 {
+    // Collects the input ASCII character into the corresponding field in the gameMechs object 
 
     //access correct info using getter method
     char input = myGM-> getInput();
-    
     //collects input char 
     myGM->setInput(input);
-
-    // Debug: Press 'i' to increment the score
-        if (input == 'i')
-        {
-            myGM->incrementScore();
-            cout << "Debug: Score incremented. New score: " << myGM->getScore() << endl;
-        }
-
-        // Debug: Press 'l' to set the lose fla
-        else if (input == 'l')
-        {
-            myGM->setLoseFlag();
-            cout << "Debug: Lose flag set. Game will end with lose message." << endl;
-        }
-
     
 }
 
 void RunLogic(void)
 {
+    //Movement Control Of Player 
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
+
+    //Initialization of variables:
+    objPos newInsert;
+    objPos myFoodPos;
+    objPos tempBody;
+    objPosArrayList* playerBody = myPlayer->getPlayerPos();
+    myGM->getFoodPos(myFoodPos);
 
     // if(collide) {
     //     myGM->generateFood(myfoodPos);  //----------T
     //     collide = false;
     // }
 
-    myGM->clearInput();     // clear input field in GM to not repeatedly process the input
+    //Food Collection
+    playerBody->getHeadElement(tempBody);
+    if(tempBody.isPosEqual(&tempFood))
+    {
+        myGM->incrementScore();
+        newInsert.setObjPos(tempBody.x, tempBody.y, '*');
+        playerBody->insertHead(newInsert);
+        myGM->generateFood(playerBody);
+    }
+
+    //Self collision detection
+    if(myPlayer->checkSelfCollision())
+    {
+        myGM->setLoseFlag();
+    }
+
+    // Clears input field in GM to not repeatedly process the input
+    myGM->clearInput();     
 }
 
 void DrawScreen(void)
@@ -121,23 +128,25 @@ void DrawScreen(void)
 
     MacUILib_clearScreen();
 
+    // Game header message
+    MacUILib_printf("-------------------GROW UR SSSSSSNAKE!!!---------------------\n"); 
+
+    //initializing variables for this func:
     bool drawn;
-
-    objPosArrayList* playerBody = myPlayer->getPlayerPos();
     objPos tempBody;
-
     objPos myFoodPos;
+    objPosArrayList* playerBody = myPlayer->getPlayerPos();
     myGM->getFoodPos(myfoodPos);
+    
 
-
-
-    //Print board and moving character on screen
+    //GAMEBOARD PRINTING
+    
     for(int i = 0; i < myGM->getBoardSizeY(); i++) {
         for(int j = 0; j < myGM->getBoardSizeX(); j++) {
 
             drawn = false;
             
-            //iterate through every element in the list
+            //DRAWING THE PLAYER: iterate through every element in the list...
             for(int k = 0; k < playerBody->getSize; k++) {
                 playerBody->getElement(tempBody, k);
 
@@ -150,23 +159,25 @@ void DrawScreen(void)
             }
 
             if(drawn) continue;
-            //if player body was drawn don't draw anytjing below.
+            //if player body was drawn don't draw anything below.
 
-            //print game board
+            //print game board borders
             if(0 == i || (myGM->getBoardSizeY()-1) == i || 0 == j || (myGM->getBoardSizeX()-1) == j) {
                 MacUILib_printf("%c", '#');
             }
 
+            //Print Food on the Board
             else if(j == myFoodPos.x && i == myFoodPos.y)
             {
-                prinMacUILib_printftf("%c", myFoodPos.symbol);
+                MacUILib_printf("%c", myFoodPos.symbol);
             }
+            //Fill Board with spaces 
             else
             {
                 MacUILib_printf("%c", ' ');
             }
         }
-        printf("\n");
+        MacUILib_printf("\n");
     }
 
     //------------------------------------------------------------------------
@@ -182,10 +193,20 @@ void DrawScreen(void)
     MacUILib_printf("food Pos: <%d, %d> + %c\n",
                     myfoodPos.x, myfoodPos.y, myfoodPos.symbol);
 
+    //WELCOME MESSAGE?
 
+    // QUIT GAME MESSAGE
+    if(myGM->getExitFlagStatus())
+    {
+        MacUILib_printf("Quit game."); 
+    }
 
-
-
+    // LOST GAME MESSAGE        
+    if(myGM->getLoseFlagStatus())
+    {
+        MacUILib_printf("You LOST!"); 
+        myGM->setExitTrue();
+    }
 
 
 }

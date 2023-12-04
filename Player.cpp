@@ -13,7 +13,7 @@ Player::Player(GameMechs* thisGMRef)
                     mainGameMechsRef->getBoardSizeY()/2, '*');
 
     playerPosList = new objPosArrayList();
-    playerPosList.insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
 }
 
 
@@ -88,37 +88,37 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-    objPos currHead;        // holding the pos info of the current head
-    playerPosList.getHeadElement(currHead);
+    objPos currentHead;        // holding the pos info of the current head
+    playerPosList.getHeadElement(currentHead);
 
     switch(myDir) {
 
         case UP:
-            currHead.y--;               //move up array
-            if (currHead.y < 1) {       // when playerPos is out of bound at the top of the board,
+            currentHead.y--;               //move up array
+            if (currentHead.y < 1) {       // when playerPos is out of bound at the top of the board,
                                          // character is moved to the bottom on the board (wraparound)
-                currHead.y = mainGameMechsRef->getBoardSizeY() - 2;
+                currentHead.y = mainGameMechsRef->getBoardSizeY() - 2;
             }
             break;
 
         case DOWN:
-            currHead.y++;               //move down array
-            if (currHead.y >= mainGameMechsRef->getBoardSizeY()) {
-                currHead.y = 1;
+            currentHead.y++;               //move down array
+            if (currentHead.y >= mainGameMechsRef->getBoardSizeY()) {
+                currentHead.y = 1;
             }
             break;
 
         case LEFT:
-            currHead.x--;               //move left of array
-            if (currHead.x < 1) {
-                currHead.x = mainGameMechsRef->getBoardSizeX() - 2;
+            currentHead.x--;               //move left of array
+            if (currentHead.x < 1) {
+                currentHead.x = mainGameMechsRef->getBoardSizeX() - 2;
             }
             break;
 
         case RIGHT:
-            currHead.x++;               //move right of array
-            if (currHead.x >= mainGameMechsRef->getBoardSizeX()) {
-                currHead.x = 1;
+            currentHead.x++;               //move right of array
+            if (currentHead.x >= mainGameMechsRef->getBoardSizeX()) {
+                currentHead.x = 1;
             }
             break;
 
@@ -127,7 +127,7 @@ void Player::movePlayer()
             break;
     }
     // new current head should be inserted to the head of the list,
-    playerPosList->insertHead(currHead);
+    playerPosList->insertHead(currentHead);
     
     // then, remove tail
     playerPosList->removeTail();

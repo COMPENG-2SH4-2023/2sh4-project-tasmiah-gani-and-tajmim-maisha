@@ -12,16 +12,13 @@ using namespace std;
 
 // Global pointer to specific classes
 GameMechs* myGM;
+Player* myPlayer;
 
-objPos myPos;
 
 //This is a makeshift setup, so I don't hav eto touch generateItem yet. 
 //think about how to change myfoodPos into an array list operation
 //you have to do this by yourself 
-objPos myfoodPos{-1, -1, 'o'};       //--------------T
-
-
-Player* myPlayer;
+//------objPos myfoodPos{-1, -1, 'o'};       //--------------T
 
 
 bool exitFlag;
@@ -35,6 +32,8 @@ void LoopDelay(void);
 void CleanUp(void);
 
 char gameBoard[15][30];
+
+
 
 int main(void)
 {
@@ -61,7 +60,6 @@ void Initialize(void)
 
     // Create a gameMechanics object on the heap and initialize its fields    
     myGM = new GameMechs(30, 15); //makes board size 30x15
-    
     myPlayer = new Player(myGM);
     
     collide = true;
@@ -71,6 +69,10 @@ void Initialize(void)
     //Think about whether you want to set up a debug key to call the food generation routine fro verification 
 
     //remember, generateFood() requires player reference. You will need to provide it AFTER player object is instantiated
+    // this is a makeshift setup so I don't have to touch generateItem yet
+    // you need to do this yourself :)
+    objPos tempPos{-1, -1, 'o'};
+    myGM->generateFood(tempPos);
 
 
 }
@@ -106,14 +108,12 @@ void RunLogic(void)
     myPlayer->updatePlayerDir();
     myPlayer->movePlayer();
 
-    if(collide) {
-        myGM->generateFood(myfoodPos);  //----------T
-        collide = false;
-    }
+    // if(collide) {
+    //     myGM->generateFood(myfoodPos);  //----------T
+    //     collide = false;
+    // }
 
-    //clear input field in GM
-    // so to not repeatedly process the input
-    myGM->clearInput();
+    myGM->clearInput();     // clear input field in GM to not repeatedly process the input
 }
 
 void DrawScreen(void)
@@ -121,74 +121,71 @@ void DrawScreen(void)
 
     MacUILib_clearScreen();
 
-    objPosArrayList* playerBody = getPlayerPos();
+    bool drawn;
 
-    // objPos tempPos;
-    myPlayer->getPlayerPos(myPos);
+    objPosArrayList* playerBody = myPlayer->getPlayerPos();
+    objPos tempBody;
 
-    myGM->getFoodPos(myfoodPos);    //----------T
-
-    // MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n", 
-    //                 myGM->getBoardSizeX(),
-    //                 myGM->getBoardSizeY(),
-    //                 tempPos.x, tempPos.y, tempPos.symbol);
-
-    MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n",
-                    myGM->getBoardSizeX(),
-                    myGM->getBoardSizeY(),
-                    myPos.x, myPos.y, myPos.symbol);
+    objPos myFoodPos;
+    myGM->getFoodPos(myfoodPos);
 
 
-    MacUILib_printf("food: <%d, %d> + %c\n",
-                    myfoodPos.x, myfoodPos.y, myfoodPos.symbol);
-
-    MacUILib_printf("Score: %d, Player Pos: <%d, %d>\n",
-    myGM->getScore(), myPos.x, myPos.y);
 
     //Print board and moving character on screen
-    for(int row = 0; row < myGM->getBoardSizeY(); row++) {
-        for(int col = 0; col < myGM->getBoardSizeX(); col++) {
+    for(int i = 0; i < myGM->getBoardSizeY(); i++) {
+        for(int j = 0; j < myGM->getBoardSizeX(); j++) {
+
+            drawn = false;
+            
+            //iterate through every element in the list
+            for(int k = 0; k < playerBody->getSize; K++) {
+                playerBody->getElement(tempBody, i);
+                if(tempBody.x == j && tempBody.y == i) {
+                    MacUILib_printf("%c", tempBody.symbol);
+                    drawn = true;
+                    break;
+
+                }
+            }
+
+            if(drawn) continue;
+            //if player body was drawn don't draw anytjing below.
 
             //print game board
-            if(0 == row || (myGM->getBoardSizeY()-1) == row || 0 == col || (myGM->getBoardSizeX()-1) == col) {
-                printf("%c", '#');
+            if(0 == i || (myGM->getBoardSizeY()-1) == i || 0 == j || (myGM->getBoardSizeX()-1) == j) {
+                MacUILib_printf("%c", '#');
             }
-            else if(j == tempPos.x && i == tempPos.y)
-            {
-                printf("%c", tempPos.symbol);
-            }
+
             else if(j == myFoodPos.x && i == myFoodPos.y)
             {
-                printf("%c", myFoodPos.symbol);
+                prinMacUILib_printftf("%c", myFoodPos.symbol);
             }
             else
             {
-                printf("%c", ' ');
-            }
-/*
-            //print moving character
-            else if(myPos.y == row && myPos.x == col) {
-                gameBoard[row][col] = myPos.symbol;
-            }
-
-            //print food character
-            else if(myfoodPos.y == row && myfoodPos.x == col) {
-                printf("%c", my.symbol);
-            }
-
-            //print empty space on board
-            else {
-                printf("%c", ' ');
+                MacUILib_printf("%c", ' ');
             }
         }
-
-        printf("\n");
-        */
-
+        MacUILib_printf("\n");
     }
 
+    //--------------------------------------------
+    MacUILib_printf("BoardSize: %dx%d, Player Pos: <%d, %d> + %c\n",
+                    myGM->getBoardSizeX(),
+                    myGM->getBoardSizeY(),
+                    tempBody.x, tempBody.y, tempBody.symbol);
 
-}
+
+    MacUILib_printf("Score: %d\n", myGM->getScore());
+    
+    MacUILib_printf("food Pos: <%d, %d> + %c\n",
+                    myfoodPos.x, myfoodPos.y, myfoodPos.symbol);
+
+
+
+
+
+
+
 }
 
 void LoopDelay(void)
